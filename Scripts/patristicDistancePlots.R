@@ -1,0 +1,8 @@
+library(tidyverse)
+setwd('~/Documents/Biology/Sharbrough_Lab/Projects/Potamomics/Genome Duplication/')
+d<-read.table('Pant_Pkait_Pest.patristicDistance.2-1-1_orthologs.txt',sep='\t',header=T)
+pe<-read.table('Pant-Pkai-Pest.Pest.paralogs.patristicDistance.txt',header=T,sep='\t')
+pk<-read.table('Pant-Pkai-Pest.Pkait.paralogs.patristicDistance.txt',header=T,sep='\t')
+pdf(file="patristicDistance.pdf",width=3.25,height=3.25)
+ggplot(data=d,mapping=aes(x=PaPa_PatristicDistance)) + geom_density(col='darkgoldenrod1') + geom_density(mapping=aes(x=meanPaPe_PatristicDistance),col='forestgreen') + geom_density(mapping=aes(x=meanPaPk_PatristicDistance),col='darkviolet') + geom_density(mapping=aes(x=PkPe_PatristicDistance),col='grey50') + scale_x_continuous(name="Patristic Distance", limits=c(0,0.25),breaks=c(0,0.025,0.05,0.075,0.1,0.125,0.15,0.175,0.2,0.225,0.25)) + scale_y_continuous(name="Density", limits=c(0,NA)) + theme(axis.text=element_text(colour='black',size=8),panel.background=element_rect(fill='transparent',colour='black',linewidth=0.25),panel.grid.major=element_line(colour='black',size=0.05),panel.grid.minor=element_line(colour='black',size=0.025),axis.ticks=element_line(colour='black',size=0.25)) + geom_density(data=pe,mapping=aes(x=paralogous_PatristicDistance),colour='forestgreen',lty=2,linewidth=1.5) + geom_density(data=pk,mapping=aes(x=paralogous_PatristicDistance),colour='darkviolet',lty=2,linewidth=1.5)
+dev.off()
